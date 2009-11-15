@@ -1,3 +1,9 @@
+/**
+ * @author Nicholas Presta
+ * @copyright 2009 Nicholas Presta
+ * @license http://creativecommons.org/licenses/BSD/
+ */
+
 package main
 
 import ("fmt"; "http"; "os"; "flag"; "io";)
