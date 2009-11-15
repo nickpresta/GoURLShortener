@@ -1,12 +1,6 @@
 package main
 
-import (
-    "fmt";
-    "http";
-    "os";
-    "flag";
-    "io";
-)
+import ("fmt"; "http"; "os"; "flag"; "io";)
 
 func main() {
     flag.Parse(); // Parse command line args
@@ -45,5 +39,5 @@ func shortenURL (url string) (shortURL string, err os.Error) {
     b, err := io.ReadAll(response.Body);
     response.Body.Close();
 
-    return string(b), nil;
+    return string(b), nil
 }
