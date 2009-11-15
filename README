@@ -1,0 +1,8 @@
+A simple command line URL shortener using http://is.gd/,
+written in Go (http://golang.org).
+
+Usage
+=====
+Run via the command line:
+
+./isgd http://google.ca
