@@ -5,7 +5,6 @@ import (
     "http";
     "os";
     "flag";
-    "bytes";
     "io";
 )
 
@@ -31,11 +30,11 @@ func main() {
 func shortenURL (url string) (shortURL string, err os.Error) {
     u := "http://is.gd/api.php?longurl=" + http.URLEscape(url);
 
-    response, _, error := http.Get(u);
+    response, _, err := http.Get(u);
 
     // Make sure we can connect
-    if error != nil {
-        return "", error
+    if err != nil {
+        return
     }
 
     // Make sure we get a 200 response code
@@ -43,9 +42,8 @@ func shortenURL (url string) (shortURL string, err os.Error) {
         return "", os.NewError("Could not shorted your URL. Perhaps it was malformed?");
     }
 
-    var b []byte;
-    b, err = io.ReadAll(response.Body);
+    b, err := io.ReadAll(response.Body);
     response.Body.Close();
 
-    return bytes.NewBuffer(b).String(), nil;
+    return string(b), nil;
 }
