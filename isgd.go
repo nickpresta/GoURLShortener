@@ -6,13 +6,13 @@ func main() {
     flag.Parse(); // Parse command line args
 
     if flag.NArg() < 1 {
-        fmt.Println("Cowardly refusing to shorten a blank URL");
+        fmt.Fprintln(os.Stderr, "Cowardly refusing to shorten a blank URL");
         os.Exit(-1);
     }
 
     url, error := shortenURL(flag.Arg(0));
     if error != nil {
-        fmt.Println(error);
+        fmt.Fprintln(os.Stderr, error);
         os.Exit(-1);
     }
 
@@ -31,13 +31,15 @@ func shortenURL (url string) (shortURL string, err os.Error) {
         return
     }
 
-    // Make sure we get a 200 response code
-    if response.StatusCode != 200 {
-        return "", os.NewError("Could not shorted your URL. Perhaps it was malformed?");
-    }
-
     b, err := io.ReadAll(response.Body);
     response.Body.Close();
+    shortURL = string(b);
 
-    return string(b), nil
+    // Make sure we get a 200 response code, otherwise,
+    // return the error message returned by is.gd
+    if response.StatusCode != 200 {
+        return "", os.NewError(shortURL);
+    }
+
+    return
 }
